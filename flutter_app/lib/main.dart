@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/menu_data.dart';
-import 'package:flutter_app/models/menu_item.dart';
+
 import 'package:flutter_app/providers/cart_provider.dart';
 import 'package:flutter_app/widgets/cart/cart_area.dart';
 import 'package:flutter_app/widgets/menu_card.dart';
