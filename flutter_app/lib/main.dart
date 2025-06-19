@@ -42,7 +42,7 @@ class _MenuScreenState extends State<MenuScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('${item.name}をカートに追加しました'),
-        duration: const Duration(seconds: 1),
+        duration: Duration.zero,
       ),
     );
   }

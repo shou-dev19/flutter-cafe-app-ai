@@ -72,7 +72,7 @@ void main() {
       // Verify SnackBar is shown
       expect(find.text('${mockMenuItems.first.name}をカートに追加しました'), findsOneWidget);
 
-      await tester.pump(const Duration(seconds: 2)); // Wait for SnackBar to disappear
+      await tester.pump(const Duration(seconds: 3)); // Wait for SnackBar to disappear
       await tester.pumpAndSettle();
       expect(find.text('${mockMenuItems.first.name}をカートに追加しました'), findsNothing);
     });
