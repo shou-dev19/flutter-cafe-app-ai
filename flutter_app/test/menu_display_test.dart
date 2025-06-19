@@ -67,13 +67,13 @@ void main() {
 
       // Tap the first "カートへ追加" button
       await tester.tap(find.widgetWithText(ElevatedButton, 'カートへ追加').first);
-      await tester.pump(); // Pump to trigger the SnackBar animation
+      await tester.pumpAndSettle(); // Ensure SnackBar appears and settles
 
       // Verify SnackBar is shown
       expect(find.text('${mockMenuItems.first.name}をカートに追加しました'), findsOneWidget);
 
-      await tester.pump(const Duration(seconds: 3)); // Wait for SnackBar to disappear
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(seconds: 1)); // Wait for SnackBar's duration to pass
+      await tester.pumpAndSettle(); // Wait for dismissal animation to complete
       expect(find.text('${mockMenuItems.first.name}をカートに追加しました'), findsNothing);
     });
   });
