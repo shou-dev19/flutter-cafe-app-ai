@@ -1,10 +1,15 @@
 
 import 'package:flutter_app/models/menu_item.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+part 'cart_provider.g.dart';
 
-class CartNotifier extends StateNotifier<List<MenuItem>> {
-  CartNotifier() : super([]);
+@riverpod
+class CartNotifier extends _$CartNotifier {
+  @override
+  List<MenuItem> build() {
+    return [];
+  }
 
   void addItem(MenuItem item) {
     state = [...state, item];
