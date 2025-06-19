@@ -36,10 +36,10 @@ void main() {
       expect(find.text('Test Coffee'), findsOneWidget);
       expect(find.text('A delicious test coffee.'), findsOneWidget);
       expect(find.text('¥500'), findsOneWidget);
-      expect(find.text('カートへ追加'), findsOneWidget);
+      expect(find.widgetWithText(ElevatedButton, 'カートへ追加'), findsOneWidget);
       expect(find.byType(Image), findsOneWidget);
 
-      await tester.tap(find.text('カートへ追加'));
+      await tester.tap(find.widgetWithText(ElevatedButton, 'カートへ追加'));
       await tester.pumpAndSettle();
       expect(buttonPressed, isTrue);
     });
