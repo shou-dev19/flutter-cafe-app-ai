@@ -48,7 +48,23 @@ void main() {
 
   group('MenuScreen', () {
     testWidgets('MenuScreen displays all menu items', (WidgetTester tester) async {
+      // Set a large enough window size to ensure all items can be rendered by GridView
+      // GridView width = 3/4 of screen. If screen width = 800, GridView width = 600 -> 2 columns.
+      // Card height = 300 / 0.7 = ~428.6.
+      // For 6 items in 2 columns, we need 3 rows. Total height = 3 * 428.6 + 2 * 10 (spacing) = ~1305.
+      // Add some padding for safety.
+      const double screenWidth = 800;
+      const double screenHeight = 1400; // Increased height
+      tester.binding.window.physicalSizeTestValue = const Size(screenWidth, screenHeight);
+      tester.binding.window.devicePixelRatioTestValue = 1.0; // Ensure logical pixels match physical for simplicity
+
       await tester.pumpWidget(const ProviderScope(child: MyApp()));
+
+      // Reset window size after test to avoid affecting other tests
+      addTearDown(() {
+        tester.binding.window.clearPhysicalSizeTestValue();
+        tester.binding.window.clearDevicePixelRatioTestValue();
+      });
 
       expect(find.text('メニュー'), findsOneWidget);
 
@@ -72,7 +88,7 @@ void main() {
           find.text(item.name),
           50.0, // Amount to scroll by in each step (logical pixels)
           scrollable: scrollableFinder,
-          maxScrolls: 20, // Limit the number of scrolls to prevent infinite loops
+          maxScrolls: 50, // Limit the number of scrolls to prevent infinite loops
         );
         await tester.pumpAndSettle(); // Settle animations after scrolling
 
