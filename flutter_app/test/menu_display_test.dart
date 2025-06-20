@@ -54,7 +54,21 @@ void main() {
 
       // Verify that all mock menu items are displayed
       for (var item in mockMenuItems) {
-        expect(find.text(item.name), findsOneWidget);
+        // Scroll until the item's name is visible
+        // It's important to ensure the GridView itself is used as the scrollable element
+        // or a common ancestor Scrollable.
+        final gridViewFinder = find.byType(GridView);
+        expect(gridViewFinder, findsOneWidget, reason: "GridView not found");
+
+        await tester.scrollUntilVisible(
+          find.text(item.name),
+          50.0, // Amount to scroll by in each step (logical pixels)
+          scrollable: gridViewFinder,
+          maxScrolls: 20, // Limit the number of scrolls to prevent infinite loops
+        );
+        await tester.pumpAndSettle(); // Settle animations after scrolling
+
+        expect(find.text(item.name), findsOneWidget, reason: "Could not find ${item.name} even after scrolling");
         // We cannot reliably check for price text directly as multiple items might have the same price.
         // Instead, we rely on the MenuCard widget displaying the correct price within its context.
       }
