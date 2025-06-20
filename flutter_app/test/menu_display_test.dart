@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/main.dart';
 import 'package:flutter_app/models/menu_item.dart';
 import 'package:flutter_app/widgets/menu_card.dart';
