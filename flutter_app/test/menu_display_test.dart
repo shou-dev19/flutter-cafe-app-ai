@@ -57,13 +57,21 @@ void main() {
         // Scroll until the item's name is visible
         // It's important to ensure the GridView itself is used as the scrollable element
         // or a common ancestor Scrollable.
-        final gridViewFinder = find.byType(GridView);
-        expect(gridViewFinder, findsOneWidget, reason: "GridView not found");
+        final gridViewWidgetFinder = find.byType(GridView);
+        expect(gridViewWidgetFinder, findsOneWidget, reason: "GridView not found");
+
+        // Find the actual Scrollable widget used by the GridView.
+        // GridView itself is a ScrollView, which builds a Scrollable widget internally.
+        final scrollableFinder = find.descendant(
+          of: gridViewWidgetFinder,
+          matching: find.byType(Scrollable),
+        );
+        expect(scrollableFinder, findsOneWidget, reason: "Scrollable widget within GridView not found");
 
         await tester.scrollUntilVisible(
           find.text(item.name),
           50.0, // Amount to scroll by in each step (logical pixels)
-          scrollable: gridViewFinder,
+          scrollable: scrollableFinder,
           maxScrolls: 20, // Limit the number of scrolls to prevent infinite loops
         );
         await tester.pumpAndSettle(); // Settle animations after scrolling
