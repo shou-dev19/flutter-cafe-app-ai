@@ -48,7 +48,7 @@ void main() {
 
   group('MenuScreen', () {
     testWidgets('MenuScreen displays all menu items', (WidgetTester tester) async {
-      await tester.pumpWidget(const MyApp());
+      await tester.pumpWidget(const ProviderScope(child: MyApp()));
 
       expect(find.text('メニュー'), findsOneWidget);
 
@@ -64,7 +64,7 @@ void main() {
     });
 
     testWidgets('Adding item to cart shows SnackBar', (WidgetTester tester) async {
-      await tester.pumpWidget(const MyApp());
+      await tester.pumpWidget(const ProviderScope(child: MyApp()));
 
       // Tap the first "カートへ追加" button
       await tester.tap(find.widgetWithText(ElevatedButton, 'カートへ追加').first);
