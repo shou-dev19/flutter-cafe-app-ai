@@ -5,6 +5,7 @@ import 'package:flutter_app/widgets/cart_item_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:flutter_app/models/menu_item.dart';
 void main() {
   testWidgets('CartItemCard displays item details and remove button', (WidgetTester tester) async {
     final cartItem = CartItem(id: '1', name: 'Coffee', price: 2.50, quantity: 2);
