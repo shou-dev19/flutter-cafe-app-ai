@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(color: Color(0xFFD7CCC8)), // Light brown text
           titleLarge: TextStyle(color: Color(0xFFEFEBE9)), // Light beige text for titles
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData( // Changed CardTheme to CardThemeData
           color: const Color(0xFF4E342E), // Darker brown for cards
           elevation: 2,
           shape: RoundedRectangleBorder(
@@ -169,10 +169,11 @@ class MenuScreen extends ConsumerWidget { // Change to ConsumerWidget
             flex: 1, // Adjust flex factor as needed
             child: CartView(),
           ),
-        ],
-      ), // Closes child Row of Expanded
-    ], // Closes children of main Column (body)
-  ), // Closes main Column (body)
+        ], // Closes children of Row (from line 137)
+      ), // Closes Row (from line 136)
+    ), // Closes Expanded (from line 135)
+  ], // Closes children list of main Column (from line 91)
+), // Closes main Column (body - from line 90)
   bottomNavigationBar: BottomNavigationBar(
     backgroundColor: const Color(0xFF5D4037), // Medium brown
     selectedItemColor: const Color(0xFFEFEBE9), // Light beige
