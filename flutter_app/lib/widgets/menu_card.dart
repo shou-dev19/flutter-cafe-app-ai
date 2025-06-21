@@ -97,8 +97,7 @@ class MenuCard extends StatelessWidget {
             ),
           ),
         ],
-        ),
-      )
+      ),
     );
   }
 }
