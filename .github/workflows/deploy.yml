@@ -9,6 +9,8 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allow write access to the repository
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
