@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(color: Color(0xFFD7CCC8)), // Light brown text
           titleLarge: TextStyle(color: Color(0xFFEFEBE9)), // Light beige text for titles
         ),
-        cardTheme: CardTheme( // Changed CardTheme to CardThemeData
+        cardTheme: CardThemeData( // Changed CardTheme to CardThemeData
           color: const Color(0xFF4E342E), // Darker brown for cards
           elevation: 2,
           shape: RoundedRectangleBorder(
