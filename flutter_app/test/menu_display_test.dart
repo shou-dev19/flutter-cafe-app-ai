@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/main.dart';
 import 'package:flutter_app/models/menu_item.dart';
 import 'package:flutter_app/widgets/menu_card.dart';
@@ -47,13 +48,51 @@ void main() {
 
   group('MenuScreen', () {
     testWidgets('MenuScreen displays all menu items', (WidgetTester tester) async {
-      await tester.pumpWidget(const MyApp());
+      // Set a large enough window size to ensure all items can be rendered by GridView
+      // GridView width = 3/4 of screen. If screen width = 800, GridView width = 600 -> 2 columns.
+      // Card height = 300 / 0.7 = ~428.6.
+      // For 6 items in 2 columns, we need 3 rows. Total height = 3 * 428.6 + 2 * 10 (spacing) = ~1305.
+      // Add some padding for safety.
+      const double screenWidth = 800;
+      const double screenHeight = 1400; // Increased height
+      tester.binding.window.physicalSizeTestValue = const Size(screenWidth, screenHeight);
+      tester.binding.window.devicePixelRatioTestValue = 1.0; // Ensure logical pixels match physical for simplicity
+
+      await tester.pumpWidget(const ProviderScope(child: MyApp()));
+
+      // Reset window size after test to avoid affecting other tests
+      addTearDown(() {
+        tester.binding.window.clearPhysicalSizeTestValue();
+        tester.binding.window.clearDevicePixelRatioTestValue();
+      });
 
       expect(find.text('メニュー'), findsOneWidget);
 
       // Verify that all mock menu items are displayed
       for (var item in mockMenuItems) {
-        expect(find.text(item.name), findsOneWidget);
+        // Scroll until the item's name is visible
+        // It's important to ensure the GridView itself is used as the scrollable element
+        // or a common ancestor Scrollable.
+        final gridViewWidgetFinder = find.byType(GridView);
+        expect(gridViewWidgetFinder, findsOneWidget, reason: "GridView not found");
+
+        // Find the actual Scrollable widget used by the GridView.
+        // GridView itself is a ScrollView, which builds a Scrollable widget internally.
+        final scrollableFinder = find.descendant(
+          of: gridViewWidgetFinder,
+          matching: find.byType(Scrollable),
+        );
+        expect(scrollableFinder, findsOneWidget, reason: "Scrollable widget within GridView not found");
+
+        await tester.scrollUntilVisible(
+          find.text(item.name),
+          50.0, // Amount to scroll by in each step (logical pixels)
+          scrollable: scrollableFinder,
+          maxScrolls: 50, // Limit the number of scrolls to prevent infinite loops
+        );
+        await tester.pumpAndSettle(); // Settle animations after scrolling
+
+        expect(find.text(item.name), findsOneWidget, reason: "Could not find ${item.name} even after scrolling");
         // We cannot reliably check for price text directly as multiple items might have the same price.
         // Instead, we rely on the MenuCard widget displaying the correct price within its context.
       }
@@ -63,7 +102,7 @@ void main() {
     });
 
     testWidgets('Adding item to cart shows SnackBar', (WidgetTester tester) async {
-      await tester.pumpWidget(const MyApp());
+      await tester.pumpWidget(const ProviderScope(child: MyApp()));
 
       // Tap the first "カートへ追加" button
       await tester.tap(find.widgetWithText(ElevatedButton, 'カートへ追加').first);
