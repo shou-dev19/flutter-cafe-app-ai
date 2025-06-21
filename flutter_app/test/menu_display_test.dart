@@ -37,10 +37,10 @@ void main() {
       expect(find.text('Test Coffee'), findsOneWidget);
       expect(find.text('A delicious test coffee.'), findsOneWidget);
       expect(find.text('¥500'), findsOneWidget);
-      expect(find.widgetWithText(ElevatedButton, 'カートへ追加'), findsOneWidget);
+      expect(find.widgetWithText(ElevatedButton, 'Add'), findsOneWidget);
       expect(find.byType(Image), findsOneWidget);
 
-      await tester.tap(find.widgetWithText(ElevatedButton, 'カートへ追加'));
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Add'));
       await tester.pumpAndSettle();
       expect(buttonPressed, isTrue);
     });
@@ -66,7 +66,7 @@ void main() {
         tester.binding.window.clearDevicePixelRatioTestValue();
       });
 
-      expect(find.text('メニュー'), findsOneWidget);
+      expect(find.text('The Cozy Corner'), findsOneWidget);
 
       // Verify that all mock menu items are displayed
       for (var item in mockMenuItems) {
@@ -102,10 +102,42 @@ void main() {
     });
 
     testWidgets('Adding item to cart shows SnackBar', (WidgetTester tester) async {
+      // Set a reasonable window size for this test too
+      const double screenWidth = 800;
+      const double screenHeight = 1200; // Ensure enough height for visibility
+      tester.binding.window.physicalSizeTestValue = const Size(screenWidth, screenHeight);
+      tester.binding.window.devicePixelRatioTestValue = 1.0;
+      addTearDown(() {
+        tester.binding.window.clearPhysicalSizeTestValue();
+        tester.binding.window.clearDevicePixelRatioTestValue();
+      });
       await tester.pumpWidget(const ProviderScope(child: MyApp()));
 
-      // Tap the first "カートへ追加" button
-      await tester.tap(find.widgetWithText(ElevatedButton, 'カートへ追加').first);
+      await tester.pumpAndSettle(); // Allow layout to stabilize after pumpWidget
+
+      // Find the first "Add" button
+      final addButtonFinder = find.widgetWithText(ElevatedButton, 'Add').first;
+
+      // Find the GridView's Scrollable
+      final gridViewWidgetFinder = find.byType(GridView);
+      expect(gridViewWidgetFinder, findsOneWidget, reason: "GridView not found for scrolling");
+      final scrollableFinder = find.descendant(
+        of: gridViewWidgetFinder,
+        matching: find.byType(Scrollable),
+      );
+      expect(scrollableFinder, findsOneWidget, reason: "Scrollable within GridView not found");
+
+      // Scroll until the button is visible
+      await tester.scrollUntilVisible(
+        addButtonFinder,
+        50.0, // Scroll increment
+        scrollable: scrollableFinder,
+        maxScrolls: 20, // Limit scrolls
+      );
+      await tester.pumpAndSettle(); // Settle after scrolling
+
+      // Tap the first "Add" button
+      await tester.tap(addButtonFinder);
       await tester.pumpAndSettle(); // Ensure SnackBar appears and settles
 
       // Verify SnackBar is shown
