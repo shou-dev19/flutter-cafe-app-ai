@@ -111,24 +111,7 @@ class _MenuScreenState extends ConsumerState<MenuScreen> { // Create State class
               fit: BoxFit.cover, // Cover the area, cropping if necessary
             ),
           ),
-          // Search Bar
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color ?? const Color(0xFFD7CCC8)),
-              decoration: InputDecoration(
-                hintText: 'Search for coffee, tea, pastries...',
-                hintStyle: TextStyle(color: Colors.grey[400]),
-                prefixIcon: Icon(Icons.search, color: Colors.grey[400]),
-                filled: true,
-                fillColor: const Color(0xFF4E342E), // Darker brown
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
+
           // Placeholder for Category Filters
           Container(
             height: 50,
@@ -198,29 +181,7 @@ class _MenuScreenState extends ConsumerState<MenuScreen> { // Create State class
     ), // Closes Expanded (from line 135)
   ], // Closes children list of main Column (from line 91)
 ), // Closes main Column (body - from line 90)
-  bottomNavigationBar: BottomNavigationBar(
-    backgroundColor: const Color(0xFF5D4037), // Medium brown
-    selectedItemColor: const Color(0xFFEFEBE9), // Light beige
-    unselectedItemColor: const Color(0xFFBDBDBD), // Lighter grey
-    items: const [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        label: 'Home',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.favorite_border),
-        label: 'Favorites',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person_outline),
-        label: 'Profile',
-      ),
-    ],
-    currentIndex: 0, // Default to Home
-    onTap: (index) {
-      // Handle bottom navigation tap
-    },
-  ),
+
 ); // This closes the Scaffold
   }
 }
