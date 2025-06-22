@@ -9,6 +9,12 @@ import 'package:flutter_app/data/menu_data.dart'; // Import mockMenuItems
 
 void main() {
   testWidgets('MenuScreen filter functionality test', (WidgetTester tester) async {
+    // Set a large enough screen size
+    await tester.binding.setSurfaceSize(const Size(1080, 2400)); // A tall screen
+    addTearDown(() async {
+      await tester.binding.setSurfaceSize(null); // Reset to default
+    });
+
     // Build our app and trigger a frame.
     await tester.pumpWidget(
       const ProviderScope(
