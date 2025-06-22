@@ -5,7 +5,7 @@ import 'package:flutter_app/models/menu_item.dart';
 import 'package:flutter_app/widgets/menu_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_app/lib/data/menu_data.dart'; // Import mockMenuItems
+import 'package:flutter_app/data/menu_data.dart'; // Import mockMenuItems
 
 void main() {
   testWidgets('MenuScreen filter functionality test', (WidgetTester tester) async {
