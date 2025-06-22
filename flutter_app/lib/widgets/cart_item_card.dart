@@ -13,8 +13,8 @@ class CartItemCard extends ConsumerWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       child: ListTile(
-        title: Text(cartItem.name),
-        subtitle: Text('\$${cartItem.price.toStringAsFixed(2)} x ${cartItem.quantity}'),
+        title: Text(cartItem.name, style: const TextStyle(color: Color(0xFFEFEBE9))),
+        subtitle: Text('\$${cartItem.price.toStringAsFixed(2)} x ${cartItem.quantity}', style: const TextStyle(color: Color(0xFFBDBDBD))),
         trailing: IconButton(
           icon: const Icon(Icons.remove_shopping_cart),
           onPressed: () {
