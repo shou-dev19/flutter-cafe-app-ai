@@ -54,7 +54,7 @@ void main() {
       // For 6 items in 2 columns, we need 3 rows. Total height = 3 * 428.6 + 2 * 10 (spacing) = ~1305.
       // Add some padding for safety.
       const double screenWidth = 800;
-      const double screenHeight = 1400; // Increased height
+      const double screenHeight = 2300; // Increased height to fit all 9 items based on calculated layout
       tester.binding.window.physicalSizeTestValue = const Size(screenWidth, screenHeight);
       tester.binding.window.devicePixelRatioTestValue = 1.0; // Ensure logical pixels match physical for simplicity
 
