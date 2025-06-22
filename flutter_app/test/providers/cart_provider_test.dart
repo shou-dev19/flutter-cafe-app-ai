@@ -36,7 +36,7 @@ void main() {
     });
 
     test('addItem should increment quantity if menu item already exists in cart', () {
-      final menuItem = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '');
+      final menuItem = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '', category: 'TestCategory');
       cartNotifier.addItem(menuItem); // Add first time
       cartNotifier.addItem(menuItem); // Add second time
 
@@ -47,8 +47,8 @@ void main() {
     });
 
     test('removeItem should remove an item from the cart', () {
-      final menuItem1 = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '');
-      final menuItem2 = MenuItem(id: '2', name: 'Tea', description: 'Hot tea', price: 2.00, imageUrl: '');
+      final menuItem1 = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '', category: 'TestCategory');
+      final menuItem2 = MenuItem(id: '2', name: 'Tea', description: 'Hot tea', price: 2.00, imageUrl: '', category: 'TestCategory');
       cartNotifier.addItem(menuItem1);
       cartNotifier.addItem(menuItem2);
 
@@ -61,8 +61,8 @@ void main() {
     });
 
     test('clearCart should remove all items from the cart', () {
-      final menuItem1 = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '');
-      final menuItem2 = MenuItem(id: '2', name: 'Tea', description: 'Hot tea', price: 2.00, imageUrl: '');
+      final menuItem1 = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '', category: 'TestCategory');
+      final menuItem2 = MenuItem(id: '2', name: 'Tea', description: 'Hot tea', price: 2.00, imageUrl: '', category: 'TestCategory');
       cartNotifier.addItem(menuItem1);
       cartNotifier.addItem(menuItem2);
 
@@ -74,7 +74,7 @@ void main() {
     });
 
     test('placeOrder should clear the cart after a delay', () async {
-      final menuItem = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '');
+      final menuItem = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '', category: 'TestCategory');
       cartNotifier.addItem(menuItem);
       expect(container.read(cartProvider).items.isNotEmpty, true);
 
