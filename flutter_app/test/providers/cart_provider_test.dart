@@ -24,7 +24,7 @@ void main() {
     });
 
     test('addItem should add a menu item to the cart', () {
-      final menuItem = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '');
+      final menuItem = MenuItem(id: '1', name: 'Coffee', description: 'Hot coffee', price: 2.50, imageUrl: '', category: 'TestCategory');
       cartNotifier.addItem(menuItem);
 
       final cart = container.read(cartProvider);

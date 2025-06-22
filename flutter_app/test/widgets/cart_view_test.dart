@@ -35,8 +35,8 @@ void main() {
       final container = ProviderContainer();
       // Pre-populate the cart
       final notifier = container.read(cartProvider.notifier);
-      notifier.addItem(menu_model.MenuItem(id: '1', name: 'Coffee', price: 2.50, description: '', imageUrl: ''));
-      notifier.addItem(menu_model.MenuItem(id: '2', name: 'Tea', price: 2.00, description: '', imageUrl: ''));
+      notifier.addItem(menu_model.MenuItem(id: '1', name: 'Coffee', price: 2.50, description: '', imageUrl: '', category: 'TestCategory'));
+      notifier.addItem(menu_model.MenuItem(id: '2', name: 'Tea', price: 2.00, description: '', imageUrl: '', category: 'TestCategory'));
 
       await tester.pumpWidget(
         UncontrolledProviderScope(
@@ -59,7 +59,7 @@ void main() {
     testWidgets('tapping remove button in CartItemCard within CartView removes item', (WidgetTester tester) async {
       final container = ProviderContainer();
       final notifier = container.read(cartProvider.notifier);
-      notifier.addItem(menu_model.MenuItem(id: '1', name: 'Coffee', price: 2.50, description: '', imageUrl: ''));
+      notifier.addItem(menu_model.MenuItem(id: '1', name: 'Coffee', price: 2.50, description: '', imageUrl: '', category: 'TestCategory'));
 
       await tester.pumpWidget(
         UncontrolledProviderScope(
@@ -87,7 +87,7 @@ void main() {
         ],
       );
       final notifier = container.read(cartProvider.notifier);
-      notifier.addItem(menu_model.MenuItem(id: '1', name: 'Coffee', price: 2.50, description: '', imageUrl: ''));
+      notifier.addItem(menu_model.MenuItem(id: '1', name: 'Coffee', price: 2.50, description: '', imageUrl: '', category: 'TestCategory'));
 
       await tester.pumpWidget(
         UncontrolledProviderScope(

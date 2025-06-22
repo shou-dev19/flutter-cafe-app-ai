@@ -44,7 +44,7 @@ void main() {
     expect(container.read(cartProvider).items.length, 0);
 
     // Add item to cart directly for testing removal
-    final menuItemForCart = MenuItem(id: cartItem.id, name: cartItem.name, price: cartItem.price, description: 'Test Description', imageUrl: 'test_url');
+    final menuItemForCart = MenuItem(id: cartItem.id, name: cartItem.name, price: cartItem.price, description: 'Test Description', imageUrl: 'test_url', category: 'TestCategory');
     container.read(cartProvider.notifier).addItem(menuItemForCart);
     expect(container.read(cartProvider).items.length, 1);
 
