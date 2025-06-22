@@ -69,11 +69,24 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MenuScreen extends ConsumerWidget { // Change to ConsumerWidget
+class MenuScreen extends ConsumerStatefulWidget { // Change to ConsumerStatefulWidget
   const MenuScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) { // Add WidgetRef
+  ConsumerState<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends ConsumerState<MenuScreen> { // Create State class
+  String _selectedCategory = 'すべて'; // Add state for selected category
+
+  @override
+  Widget build(BuildContext context) { // Remove WidgetRef from build method parameters
+    final ref = this.ref; // Get ref from state
+    // Filter menu items based on selected category
+    final filteredMenuItems = _selectedCategory == 'すべて'
+        ? mockMenuItems
+        : mockMenuItems.where((item) => item.category == _selectedCategory).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('The Cozy Corner'), // Updated title
@@ -122,12 +135,21 @@ class MenuScreen extends ConsumerWidget { // Change to ConsumerWidget
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: ['All', 'Coffee', 'Tea', 'Pastries', 'Sandwiches']
+              children: ['すべて', 'コーヒー', 'お茶', 'パスタ', 'サンドイッチ'] // Updated categories
                   .map((category) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Chip(
+                        child: ChoiceChip( // Changed to ChoiceChip for selection indication
                           label: Text(category),
+                          selected: _selectedCategory == category, // Set selected state
+                          onSelected: (selected) { // Handle selection
+                            if (selected) {
+                              setState(() {
+                                _selectedCategory = category;
+                              });
+                            }
+                          },
                           backgroundColor: const Color(0xFF5D4037), // Medium brown
+                          selectedColor: const Color(0xFFA1887F), // Lighter brown for selected
                           labelStyle: const TextStyle(color: Color(0xFFEFEBE9)), // Light beige text
                         ),
                       ))
@@ -148,9 +170,9 @@ class MenuScreen extends ConsumerWidget { // Change to ConsumerWidget
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
-                itemCount: mockMenuItems.length,
+                itemCount: filteredMenuItems.length, // Use filtered list
                 itemBuilder: (context, index) {
-                  final item = mockMenuItems[index];
+                  final item = filteredMenuItems[index]; // Use filtered list
                   return MenuCard(
                     item: item,
                     onAddToCart: () {
