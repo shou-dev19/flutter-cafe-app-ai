@@ -16,7 +16,8 @@ class CartView extends ConsumerWidget {
 
     return Container(
       padding: const EdgeInsets.all(16.0),
-      color: Colors.grey[200],
+      // Use cardTheme color for background to match the menu screen style
+      color: Theme.of(context).cardTheme.color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
