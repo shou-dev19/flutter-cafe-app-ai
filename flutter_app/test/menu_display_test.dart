@@ -17,6 +17,7 @@ void main() {
         description: 'A delicious test coffee.',
         price: 500,
         imageUrl: 'https://via.placeholder.com/150',
+        category: 'Test Category', // Added category
       );
 
       bool buttonPressed = false;
