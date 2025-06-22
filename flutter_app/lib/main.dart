@@ -90,11 +90,13 @@ class MenuScreen extends ConsumerWidget { // Change to ConsumerWidget
       body: Column( // Main layout as a Column
         children: [
           // Placeholder for Header/Banner (e.g., Image or Carousel)
-          Container(
+          SizedBox(
             height: 150,
-            color: Colors.grey[800], // Placeholder color
-            alignment: Alignment.center,
-            child: const Text('Special Offers Banner', style: TextStyle(color: Colors.white)),
+            width: double.infinity, // Make the image take the full width
+            child: Image.asset(
+              'assets/cafe_top.jpeg',
+              fit: BoxFit.cover, // Cover the area, cropping if necessary
+            ),
           ),
           // Search Bar
           Padding(

@@ -23,7 +23,7 @@ class MenuCard extends StatelessWidget {
             flex: 3, // Give more space to the image
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)), // Match card's border radius
-              child: Image.network(
+              child: Image.asset(
                 item.imageUrl,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
