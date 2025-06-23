@@ -5,9 +5,21 @@ import 'package:flutter_app/providers/cart_provider.dart';
 import 'package:flutter_app/widgets/cart_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_app/domain/usecases/place_order_use_case.dart';
+import 'package:flutter_app/models/cart.dart';
+
+// Mock PlaceOrderUseCase for testing
+class MockPlaceOrderUseCase implements PlaceOrderUseCase {
+  @override
+  Future<void> execute(Cart cart) async {
+    // Simulate a network request or any other logic
+    await Future.delayed(const Duration(milliseconds: 50));
+  }
+}
 
 // A mock CartNotifier for testing purposes
 class MockCartNotifier extends CartNotifier {
+  MockCartNotifier(PlaceOrderUseCase placeOrderUseCase) : super(placeOrderUseCase);
   @override
   Future<void> placeOrder() async {
     // Simulate a network request
@@ -83,7 +95,7 @@ void main() {
       final container = ProviderContainer(
         overrides: [
           // Override the cartProvider to use MockCartNotifier for predictable behavior
-          cartProvider.overrideWith((ref) => MockCartNotifier()),
+          cartProvider.overrideWith((ref) => MockCartNotifier(MockPlaceOrderUseCase())),
         ],
       );
       final notifier = container.read(cartProvider.notifier);

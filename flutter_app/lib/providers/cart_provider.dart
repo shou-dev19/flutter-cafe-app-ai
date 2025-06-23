@@ -2,9 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/models/cart.dart';
 import 'package:flutter_app/models/cart_item.dart';
 import 'package:flutter_app/models/menu_item.dart';
+import 'package:flutter_app/domain/usecases/place_order_use_case.dart';
+import 'package:flutter_app/providers/order_providers.dart';
 
 class CartNotifier extends StateNotifier<Cart> {
-  CartNotifier() : super(Cart());
+  final PlaceOrderUseCase _placeOrderUseCase;
+
+  CartNotifier(this._placeOrderUseCase) : super(Cart());
 
   void addItem(MenuItem menuItem) {
     final cartItem = CartItem(
@@ -23,16 +27,28 @@ class CartNotifier extends StateNotifier<Cart> {
     state = state.clearCart();
   }
 
-  // Mock server interaction
   Future<void> placeOrder() async {
-    // Simulate a network request
-    await Future.delayed(const Duration(seconds: 1));
-    print("Order placed for items: \${state.items.map((e) => e.name).join(', ')}");
-    print("Total price: \${state.totalPrice}");
-    clearCart();
+    if (state.items.isEmpty) {
+      // Don't place an order if the cart is empty
+      return;
+    }
+    try {
+      await _placeOrderUseCase.execute(state);
+      // If the order is successful, clear the cart
+      // The README specifies: "「注文確定」ボタンが押下された後、カートエリアは非表示になります。"
+      // Clearing the cart will make it disappear as per current logic (cart area shown only if items > 0)
+      clearCart();
+    } catch (e) {
+      // Handle or log the error appropriately
+      // For now, just print it. In a real app, you might show a message to the user.
+      print("Error placing order: $e");
+      // Optionally, rethrow the error if the UI needs to react to it specifically
+      // throw e;
+    }
   }
 }
 
 final cartProvider = StateNotifierProvider<CartNotifier, Cart>((ref) {
-  return CartNotifier();
+  final placeOrderUseCase = ref.watch(placeOrderUseCaseProvider);
+  return CartNotifier(placeOrderUseCase);
 });
