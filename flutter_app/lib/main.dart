@@ -120,7 +120,7 @@ class _MenuScreenState extends ConsumerState<MenuScreen> { // Create State class
               scrollDirection: Axis.horizontal,
               children: ['すべて', 'コーヒー', 'お茶', 'パスタ', 'サンドイッチ'] // Updated categories
                   .map((category) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
                         child: ChoiceChip( // Changed to ChoiceChip for selection indication
                           label: Text(category),
                           selected: _selectedCategory == category, // Set selected state

@@ -23,7 +23,7 @@ class CartView extends ConsumerWidget {
         children: [
           Text(
             'カート',
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: const Color(0xFFEFEBE9)),
           ),
           const SizedBox(height: 8.0),
           Expanded(
