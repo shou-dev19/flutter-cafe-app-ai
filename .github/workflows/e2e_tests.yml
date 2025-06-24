@@ -1,0 +1,37 @@
+name: E2E Tests
+
+on:
+  deployment_status:
+
+jobs:
+  e2e_test:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'github-pages'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # CypressがサポートするNode.jsのバージョンを指定
+
+      - name: Install dependencies and Cypress
+        run: |
+          cd flutter_app # flutter_appディレクトリに移動
+          npm install
+          npm install cypress --save-dev # Cypressをインストール
+
+      - name: Run Cypress tests
+        env:
+          BASE_URL: ${{ github.event.deployment_status.target_url }} # デプロイされたURLを環境変数として設定
+        run: |
+          cd flutter_app # flutter_appディレクトリに移動
+          npx cypress run --config video=true # 動画を記録してテストを実行
+
+      - name: Upload test videos
+        uses: actions/upload-artifact@v3
+        if: always() # テストが失敗した場合でも動画をアップロード
+        with:
+          name: cypress-videos
+          path: flutter_app/cypress/videos # flutter_appディレクトリ内の動画をアップロード
