@@ -134,6 +134,7 @@ class _MenuScreenState extends ConsumerState<MenuScreen> { // Create State class
                           backgroundColor: const Color(0xFF5D4037), // Medium brown
                           selectedColor: const Color(0xFFA1887F), // Lighter brown for selected
                           labelStyle: const TextStyle(color: Color(0xFFEFEBE9)), // Light beige text
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Ensure chip sizes to content
                         ),
                       ))
                   .toList(),
