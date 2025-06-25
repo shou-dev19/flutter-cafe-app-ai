@@ -18,7 +18,6 @@ class CartItemCard extends ConsumerWidget {
         trailing: SizedBox(
           width: 120, // Constrain the width of the trailing widget
           child: Row(
-            mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
                 icon: const Icon(Icons.remove_circle_outline, color: Color(0xFFEFEBE9)),
