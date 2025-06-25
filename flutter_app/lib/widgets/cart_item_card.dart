@@ -29,9 +29,15 @@ class CartItemCard extends ConsumerWidget {
                   ref.read(cartProvider.notifier).decrementItem(cartItem.id);
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0), // Reduced padding
-                child: Text(cartItem.quantity.toString(), style: const TextStyle(color: Color(0xFFEFEBE9), fontSize: 16)),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0), // Reduced padding
+                  child: Text(
+                    cartItem.quantity.toString(),
+                    style: const TextStyle(color: Color(0xFFEFEBE9), fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
               IconButton(
                 icon: const Icon(Icons.add_circle_outline, color: Color(0xFFEFEBE9)),
