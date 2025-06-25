@@ -15,41 +15,45 @@ class CartItemCard extends ConsumerWidget {
       child: ListTile(
         title: Text(cartItem.name, style: const TextStyle(color: Color(0xFFEFEBE9))),
         subtitle: Text('\$${cartItem.price.toStringAsFixed(2)} x ${cartItem.quantity}', style: const TextStyle(color: Color(0xFFBDBDBD))),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.remove_circle_outline, color: Color(0xFFEFEBE9)),
-              iconSize: 20,
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
-              onPressed: () {
-                ref.read(cartProvider.notifier).decrementItem(cartItem.id);
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(cartItem.quantity.toString(), style: const TextStyle(color: Color(0xFFEFEBE9), fontSize: 16)),
-            ),
-            IconButton(
-              icon: const Icon(Icons.add_circle_outline, color: Color(0xFFEFEBE9)),
-              iconSize: 20,
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
-              onPressed: () {
-                ref.read(cartProvider.notifier).incrementItem(cartItem.id);
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete_outline, color: Color(0xFFEFEBE9)),
-              iconSize: 20,
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
-              onPressed: () {
-                ref.read(cartProvider.notifier).removeItem(cartItem.id);
-              },
-            ),
-          ],
+\
+        trailing: SizedBox(
+          width: 130, // Constrain the width of the trailing widget
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.remove_circle_outline, color: Color(0xFFEFEBE9)),
+                iconSize: 20,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () {
+                  ref.read(cartProvider.notifier).decrementItem(cartItem.id);
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0), // Reduced padding
+                child: Text(cartItem.quantity.toString(), style: const TextStyle(color: Color(0xFFEFEBE9), fontSize: 16)),
+              ),
+              IconButton(
+                icon: const Icon(Icons.add_circle_outline, color: Color(0xFFEFEBE9)),
+                iconSize: 20,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () {
+                  ref.read(cartProvider.notifier).incrementItem(cartItem.id);
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete_outline, color: Color(0xFFEFEBE9)),
+                iconSize: 20,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () {
+                  ref.read(cartProvider.notifier).removeItem(cartItem.id);
+                },
+              ),
+            ],
+          ),
         ),
 
       ),
