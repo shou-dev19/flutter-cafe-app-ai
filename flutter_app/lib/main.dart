@@ -158,15 +158,6 @@ class _MenuScreenState extends ConsumerState<MenuScreen> { // Create State class
                   final item = filteredMenuItems[index]; // Use filtered list
                   return MenuCard(
                     item: item,
-                    onAddToCart: () {
-                      ref.read(cartProvider.notifier).addItem(item); // Use Riverpod notifier
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('${item.name}をカートに追加しました'),
-                          duration: const Duration(seconds: 1),
-                        ),
-                      );
-                    },
                   );
                 },
               ),

@@ -20,6 +20,9 @@ class CartItemCard extends ConsumerWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.remove_circle_outline, color: Color(0xFFEFEBE9)),
+              iconSize: 20,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
               onPressed: () {
                 ref.read(cartProvider.notifier).decrementItem(cartItem.id);
               },
@@ -30,12 +33,18 @@ class CartItemCard extends ConsumerWidget {
             ),
             IconButton(
               icon: const Icon(Icons.add_circle_outline, color: Color(0xFFEFEBE9)),
+              iconSize: 20,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
               onPressed: () {
                 ref.read(cartProvider.notifier).incrementItem(cartItem.id);
               },
             ),
             IconButton(
               icon: const Icon(Icons.delete_outline, color: Color(0xFFEFEBE9)),
+              iconSize: 20,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
               onPressed: () {
                 ref.read(cartProvider.notifier).removeItem(cartItem.id);
               },

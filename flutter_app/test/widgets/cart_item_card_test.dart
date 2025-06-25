@@ -22,7 +22,7 @@ void main() {
 
     expect(find.text('Coffee'), findsOneWidget);
     expect(find.text('\$2.50 x 2'), findsOneWidget);
-    expect(find.byIcon(Icons.remove_shopping_cart), findsOneWidget);
+    expect(find.byIcon(Icons.delete_outline), findsOneWidget);
   });
 
   testWidgets('CartItemCard calls removeItem when remove button is tapped', (WidgetTester tester) async {
@@ -48,7 +48,7 @@ void main() {
     container.read(cartProvider.notifier).addItem(menuItemForCart);
     expect(container.read(cartProvider).items.length, 1);
 
-    await tester.tap(find.byIcon(Icons.remove_shopping_cart));
+    await tester.tap(find.byIcon(Icons.delete_outline));
     await tester.pump();
 
     expect(container.read(cartProvider).items.isEmpty, true);

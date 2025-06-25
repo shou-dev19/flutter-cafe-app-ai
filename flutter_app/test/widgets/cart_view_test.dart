@@ -83,7 +83,7 @@ void main() {
       );
 
       expect(find.text('Coffee'), findsOneWidget);
-      await tester.tap(find.byIcon(Icons.remove_shopping_cart));
+      await tester.tap(find.byIcon(Icons.delete_outline));
       await tester.pumpAndSettle(); // Allow time for state update and rebuild
 
       // CartView should now be empty (SizedBox.shrink)
