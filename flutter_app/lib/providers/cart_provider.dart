@@ -28,7 +28,7 @@ class CartNotifier extends StateNotifier<Cart> {
   }
 
   void removeItem(String itemId) {
-    state = state.removeItem(itemId);
+    state = state.decrementItemQuantity(itemId);
   }
 
   void clearCart() {
