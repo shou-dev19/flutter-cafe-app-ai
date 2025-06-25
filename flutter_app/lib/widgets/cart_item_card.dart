@@ -16,7 +16,7 @@ class CartItemCard extends ConsumerWidget {
         title: Text(cartItem.name, style: const TextStyle(color: Color(0xFFEFEBE9))),
         subtitle: Text('\$${cartItem.price.toStringAsFixed(2)} x ${cartItem.quantity}', style: const TextStyle(color: Color(0xFFBDBDBD))),
         trailing: SizedBox(
-          width: 130, // Constrain the width of the trailing widget
+          width: 170, // Constrain the width of the trailing widget
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
