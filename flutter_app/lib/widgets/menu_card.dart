@@ -16,7 +16,7 @@ class MenuCard extends ConsumerWidget { // Changed to ConsumerWidget
   @override
   Widget build(BuildContext context, WidgetRef ref) { // Added WidgetRef
     final cart = ref.watch(cartProvider);
-    final quantity = cart.items.firstWhere((cartItem) => cartItem.item.id == item.id, orElse: () => CartItem(item: item, quantity: 0)).quantity;
+    final quantity = cart.items.firstWhere((cartItem) => cartItem.id == item.id, orElse: () => CartItem(id: item.id, name: item.name, price: item.price, imageUrl: item.imageUrl, quantity: 0)).quantity;
 
     return Card( // Uses CardTheme from main.dart
       child: Column(
@@ -91,7 +91,7 @@ class MenuCard extends ConsumerWidget { // Changed to ConsumerWidget
                             icon: const Icon(Icons.remove_circle_outline),
                             color: const Color(0xFFBE9C91),
                             onPressed: () {
-                              ref.read(cartProvider.notifier).removeItem(item);
+                              ref.read(cartProvider.notifier).removeItem(item.id);
                             },
                           ),
                           Text(quantity.toString(), style: Theme.of(context).textTheme.titleMedium),

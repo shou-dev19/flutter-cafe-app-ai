@@ -15,6 +15,7 @@ class CartNotifier extends StateNotifier<Cart> {
       id: menuItem.id,
       name: menuItem.name,
       price: menuItem.price,
+      imageUrl: menuItem.imageUrl, // Added
     );
     state = state.addItem(cartItem);
   }

@@ -14,9 +14,9 @@ class CartItemCard extends ConsumerWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       child: ListTile(
-        leading: Image.asset(cartItem.item.imageUrl, width: 50, height: 50, fit: BoxFit.cover), // Add image
-        title: Text(cartItem.item.name, style: const TextStyle(color: Color(0xFFEFEBE9))),
-        subtitle: Text('¥${cartItem.item.price.toStringAsFixed(0)}', style: const TextStyle(color: Color(0xFFBDBDBD))),
+        leading: Image.asset(cartItem.imageUrl, width: 50, height: 50, fit: BoxFit.cover), // Add image
+        title: Text(cartItem.name, style: const TextStyle(color: Color(0xFFEFEBE9))),
+        subtitle: Text('¥${cartItem.price.toStringAsFixed(0)}', style: const TextStyle(color: Color(0xFFBDBDBD))),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -24,7 +24,7 @@ class CartItemCard extends ConsumerWidget {
               icon: const Icon(Icons.remove_circle_outline),
               color: const Color(0xFFBE9C91),
               onPressed: () {
-                ref.read(cartProvider.notifier).removeItem(cartItem.item);
+                ref.read(cartProvider.notifier).removeItem(cartItem.id);
               },
             ),
             Text(cartItem.quantity.toString(), style: Theme.of(context).textTheme.titleMedium?.copyWith(color: const Color(0xFFEFEBE9))),
