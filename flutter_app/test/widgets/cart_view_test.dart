@@ -52,7 +52,7 @@ void main() {
       await tester.pumpWidget(createTestableWidget(const CartView(), container));
 
       // CartView returns SizedBox.shrink() when empty
-      expect(find.byType(Material), findsNothing); // The main Material widget of CartView
+      expect(find.byType(Positioned), findsNothing); // The Positioned widget that wraps CartView when not empty
       expect(find.textContaining('カート'), findsNothing);
     });
 
