@@ -100,88 +100,82 @@ class _MenuScreenState extends ConsumerState<MenuScreen> { // Create State class
           ),
         ],
       ),
-      body: Column( // Main layout as a Column
+      body: Stack( // Main layout as a Stack
         children: [
-          // Placeholder for Header/Banner (e.g., Image or Carousel)
-          SizedBox(
-            height: 150,
-            width: double.infinity, // Make the image take the full width
-            child: Image.asset(
-              'assets/cafe_top.jpeg',
-              fit: BoxFit.cover, // Cover the area, cropping if necessary
-            ),
-          ),
-
-          // Placeholder for Category Filters
-          Container(
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: ['すべて', 'コーヒー', 'お茶', 'パスタ', 'サンドイッチ'] // Updated categories
-                  .map((category) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: ChoiceChip( // Changed to ChoiceChip for selection indication
-                          label: Text(category),
-                          selected: _selectedCategory == category, // Set selected state
-                          onSelected: (selected) { // Handle selection
-                            if (selected) {
-                              setState(() {
-                                _selectedCategory = category;
-                              });
-                            }
-                          },
-                          backgroundColor: const Color(0xFF5D4037), // Medium brown
-                          selectedColor: const Color(0xFFA1887F), // Lighter brown for selected
-                          labelStyle: const TextStyle(color: Color(0xFFEFEBE9)), // Light beige text
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Ensure chip sizes to content
-                        ),
-                      ))
-                  .toList(),
-            ),
-          ),
-          Expanded( // This will now contain the Row for Menu and Cart
-            child: Row(
-              children: [
-          Expanded( // Menu takes up available space
-            flex: 3, // Adjust flex factor as needed
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 300,
-                  childAspectRatio: 0.7,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
+          Column( // This Column contains the main page content (header, filters, menu)
+            children: [
+              // Placeholder for Header/Banner (e.g., Image or Carousel)
+              SizedBox(
+                height: 150,
+                width: double.infinity, // Make the image take the full width
+                child: Image.asset(
+                  'assets/cafe_top.jpeg',
+                  fit: BoxFit.cover, // Cover the area, cropping if necessary
                 ),
-                itemCount: filteredMenuItems.length, // Use filtered list
-                itemBuilder: (context, index) {
-                  final item = filteredMenuItems[index]; // Use filtered list
-                  return MenuCard(
-                    item: item,
-                    onAddToCart: () {
-                      ref.read(cartProvider.notifier).addItem(item); // Use Riverpod notifier
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('${item.name}をカートに追加しました'),
-                          duration: const Duration(seconds: 1),
-                        ),
+              ),
+
+              // Placeholder for Category Filters
+              Container(
+                height: 50,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: ['すべて', 'コーヒー', 'お茶', 'パスタ', 'サンドイッチ'] // Updated categories
+                      .map((category) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                            child: ChoiceChip( // Changed to ChoiceChip for selection indication
+                              label: Text(category),
+                              selected: _selectedCategory == category, // Set selected state
+                              onSelected: (selected) { // Handle selection
+                                if (selected) {
+                                  setState(() {
+                                    _selectedCategory = category;
+                                  });
+                                }
+                              },
+                              backgroundColor: const Color(0xFF5D4037), // Medium brown
+                              selectedColor: const Color(0xFFA1887F), // Lighter brown for selected
+                              labelStyle: const TextStyle(color: Color(0xFFEFEBE9)), // Light beige text
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Ensure chip sizes to content
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ),
+              Expanded( // Menu grid takes up available vertical space
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 300, // Max width for each item
+                      childAspectRatio: 0.7, // Aspect ratio of items
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    itemCount: filteredMenuItems.length, // Use filtered list
+                    itemBuilder: (context, index) {
+                      final item = filteredMenuItems[index]; // Use filtered list
+                      return MenuCard(
+                        item: item,
+                        onAddToCart: () {
+                          ref.read(cartProvider.notifier).addItem(item); // Use Riverpod notifier
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('${item.name}をカートに追加しました'),
+                              duration: const Duration(seconds: 1),
+                            ),
+                          );
+                        },
                       );
                     },
-                  );
-                },
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-          const Expanded( // CartView takes up remaining space
-            flex: 1, // Adjust flex factor as needed
-            child: CartView(),
-          ),
-        ], // Closes children of Row (from line 137)
-      ), // Closes Row (from line 136)
-    ), // Closes Expanded (from line 135)
-  ], // Closes children list of main Column (from line 91)
-), // Closes main Column (body - from line 90)
+          const CartView(), // CartView is overlaid on top, positioned by its own logic at the bottom
+        ],
+      ),
 
 ); // This closes the Scaffold
   }
