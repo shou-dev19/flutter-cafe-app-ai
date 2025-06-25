@@ -2,23 +2,26 @@
 
 import 'package:flutter/material.dart';
 import '../models/menu_item.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/cart_provider.dart';
 
-class MenuCard extends StatelessWidget {
+class MenuCard extends ConsumerWidget { // Changed to ConsumerWidget
   final MenuItem item;
-  final VoidCallback onAddToCart;
 
   const MenuCard({
     super.key,
     required this.item,
-    required this.onAddToCart,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) { // Added WidgetRef
+    final cart = ref.watch(cartProvider);
+    final quantity = cart.items.firstWhere((cartItem) => cartItem.item.id == item.id, orElse: () => CartItem(item: item, quantity: 0)).quantity;
+
     return Card( // Uses CardTheme from main.dart
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+        children: [
           Expanded(
             flex: 3, // Give more space to the image
             child: ClipRRect(
@@ -30,9 +33,9 @@ class MenuCard extends StatelessWidget {
                   return Container(
                     color: Colors.grey[800], // Placeholder color for error
                     child: const Icon(
-                        Icons.coffee_maker_outlined,
-                        size: 50,
-                        color: Color(0xFFEFEBE9) // Light beige icon color
+                      Icons.coffee_maker_outlined,
+                      size: 50,
+                      color: Color(0xFFEFEBE9) // Light beige icon color
                     ),
                   );
                 },
@@ -82,13 +85,24 @@ class MenuCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-                      ElevatedButton(
-                        onPressed: onAddToCart,
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                          textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text('Add'),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.remove_circle_outline),
+                            color: const Color(0xFFBE9C91),
+                            onPressed: () {
+                              ref.read(cartProvider.notifier).removeItem(item);
+                            },
+                          ),
+                          Text(quantity.toString(), style: Theme.of(context).textTheme.titleMedium),
+                          IconButton(
+                            icon: const Icon(Icons.add_circle_outline),
+                            color: const Color(0xFFBE9C91),
+                            onPressed: () {
+                              ref.read(cartProvider.notifier).addItem(item);
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -101,4 +115,5 @@ class MenuCard extends StatelessWidget {
     );
   }
 }
+
 
