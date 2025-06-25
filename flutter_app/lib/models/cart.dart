@@ -20,7 +20,32 @@ class Cart {
     }
   }
 
-  Cart removeItem(String itemId) {
+  Cart incrementItemQuantity(String itemId) {
+    final existingItemIndex = items.indexWhere((cartItem) => cartItem.id == itemId);
+    if (existingItemIndex != -1) {
+      final updatedItems = List<CartItem>.from(items);
+      updatedItems[existingItemIndex].quantity++;
+      return Cart(items: updatedItems);
+    }
+    return this; // Item not found, return current cart
+  }
+
+  Cart decrementItemQuantity(String itemId) {
+    final existingItemIndex = items.indexWhere((cartItem) => cartItem.id == itemId);
+    if (existingItemIndex != -1) {
+      final updatedItems = List<CartItem>.from(items);
+      if (updatedItems[existingItemIndex].quantity > 1) {
+        updatedItems[existingItemIndex].quantity--;
+        return Cart(items: updatedItems);
+      } else {
+        // If quantity is 1, remove the item
+        return Cart(items: items.where((i) => i.id != itemId).toList());
+      }
+    }
+    return this; // Item not found, return current cart
+  }
+
+  Cart removeItem(String itemId) { // This method is kept for direct removal if needed
     return Cart(items: items.where((item) => item.id != itemId).toList());
   }
 

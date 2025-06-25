@@ -15,12 +15,34 @@ class CartItemCard extends ConsumerWidget {
       child: ListTile(
         title: Text(cartItem.name, style: const TextStyle(color: Color(0xFFEFEBE9))),
         subtitle: Text('\$${cartItem.price.toStringAsFixed(2)} x ${cartItem.quantity}', style: const TextStyle(color: Color(0xFFBDBDBD))),
-        trailing: IconButton(
-          icon: const Icon(Icons.remove_shopping_cart),
-          onPressed: () {
-            ref.read(cartProvider.notifier).removeItem(cartItem.id);
-          },
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.remove_circle_outline, color: Color(0xFFEFEBE9)),
+              onPressed: () {
+                ref.read(cartProvider.notifier).decrementItem(cartItem.id);
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(cartItem.quantity.toString(), style: const TextStyle(color: Color(0xFFEFEBE9), fontSize: 16)),
+            ),
+            IconButton(
+              icon: const Icon(Icons.add_circle_outline, color: Color(0xFFEFEBE9)),
+              onPressed: () {
+                ref.read(cartProvider.notifier).incrementItem(cartItem.id);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete_outline, color: Color(0xFFEFEBE9)),
+              onPressed: () {
+                ref.read(cartProvider.notifier).removeItem(cartItem.id);
+              },
+            ),
+          ],
         ),
+
       ),
     );
   }

@@ -19,6 +19,14 @@ class CartNotifier extends StateNotifier<Cart> {
     state = state.addItem(cartItem);
   }
 
+  void incrementItem(String itemId) {
+    state = state.incrementItemQuantity(itemId);
+  }
+
+  void decrementItem(String itemId) {
+    state = state.decrementItemQuantity(itemId);
+  }
+
   void removeItem(String itemId) {
     state = state.removeItem(itemId);
   }

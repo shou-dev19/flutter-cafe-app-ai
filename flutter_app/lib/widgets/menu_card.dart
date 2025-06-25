@@ -1,20 +1,23 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_app/models/cart_item.dart'; // Added for CartItem type
+import 'package:flutter_app/providers/cart_provider.dart';
 import '../models/menu_item.dart';
 
-class MenuCard extends StatelessWidget {
+class MenuCard extends ConsumerWidget {
   final MenuItem item;
-  final VoidCallback onAddToCart;
+
 
   const MenuCard({
     super.key,
     required this.item,
-    required this.onAddToCart,
+
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card( // Uses CardTheme from main.dart
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -82,13 +85,68 @@ class MenuCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-                      ElevatedButton(
-                        onPressed: onAddToCart,
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                          textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text('Add'),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final cart = ref.watch(cartProvider);
+                          // Attempt to find the item in the cart
+                          CartItem? cartItem;
+                          try {
+                            cartItem = cart.items.firstWhere((ci) => ci.id == item.id);
+                          } catch (e) {
+                            cartItem = null; // Item not in cart
+                          }
+
+                          if (cartItem != null && cartItem.quantity > 0) {
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.remove_circle_outline, color: Color(0xFFBE9C91)),
+                                  iconSize: 20, // Smaller icons
+                                  padding: EdgeInsets.zero,
+                                  constraints: const BoxConstraints(),
+                                  onPressed: () {
+                                    ref.read(cartProvider.notifier).decrementItem(item.id);
+                                  },
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                                  child: Text(cartItem.quantity.toString(), style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14, color: const Color(0xFFEFEBE9))),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.add_circle_outline, color: Color(0xFFBE9C91)),
+                                  iconSize: 20, // Smaller icons
+                                  padding: EdgeInsets.zero,
+                                  constraints: const BoxConstraints(),
+                                  onPressed: () {
+                                    // If item is not in cart yet (quantity 0), addItem. Otherwise, increment.
+                                    // This case should ideally be handled by incrementItem if it can add item if not present.
+                                    // For now, assuming incrementItem works on existing items.
+                                    // If it was 0, it means it was just removed by decrement, so adding it back via addItem or increment.
+                                    // Let's ensure addItem is called if quantity is 0 or item is null.
+                                     final existingCartItem = cart.items.any((ci) => ci.id == item.id);
+                                     if (!existingCartItem) {
+                                       ref.read(cartProvider.notifier).addItem(item);
+                                     } else {
+                                       ref.read(cartProvider.notifier).incrementItem(item.id);
+                                     }
+                                  },
+                                ),
+                              ],
+                            );
+                          } else {
+                            return ElevatedButton(
+                              onPressed: () {
+                                ref.read(cartProvider.notifier).addItem(item);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                                textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                              ),
+                              child: const Text('Add'),
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),
