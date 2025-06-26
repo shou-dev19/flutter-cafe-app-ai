@@ -65,7 +65,19 @@ void main() {
       await tester.pumpAndSettle(); // Allow animations/state to settle
 
       expect(find.textContaining('カート (1種類)'), findsOneWidget);
-      expect(find.textContaining('合計: \$2.50'), findsOneWidget); // Total in collapsed bar
+\
+      // The collapsed bar is identifiable by its main GestureDetector
+      final collapsedBar = find.byType(GestureDetector);
+      // Ensure this specific GestureDetector is found (should be one for the cart header)
+      // If CartView becomes more complex, this might need a more specific finder for collapsedBar itself.
+      expect(
+        find.descendant(
+          of: collapsedBar,
+          matching: find.textContaining('合計: \\$2.50'),
+        ),
+        findsOneWidget,
+        reason: 'Expected to find the total price text within the collapsed cart header only.',
+      );
       expect(find.byIcon(Icons.keyboard_arrow_up), findsOneWidget); // Expand icon
 
       // Items and order button should not be visible when collapsed
