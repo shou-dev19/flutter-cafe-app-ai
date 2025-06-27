@@ -1,11 +1,11 @@
 name: E2E Tests
 
 on:
-  deployment_status:
+  page_build:
 
 jobs:
   e2e_test:
-    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'github-pages'
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Cypress tests
         env:
-          BASE_URL: ${{ github.event.deployment_status.target_url }} # デプロイされたURLを環境変数として設定
+          BASE_URL: ${{ github.event.page_build.payload.page.html_url }} # デプロイされたURLを環境変数として設定
         run: |
           cd flutter_app # flutter_appディレクトリに移動
           npx cypress run --config video=true,videosFolder=cypress/videos # 動画を記録してテストを実行
