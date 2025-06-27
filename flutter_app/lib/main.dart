@@ -121,20 +121,23 @@ class _MenuScreenState extends ConsumerState<MenuScreen> { // Create State class
               children: ['すべて', 'コーヒー', 'お茶', 'パスタ', 'サンドイッチ'] // Updated categories
                   .map((category) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: ChoiceChip( // Changed to ChoiceChip for selection indication
-                          label: Text(category),
-                          selected: _selectedCategory == category, // Set selected state
-                          onSelected: (selected) { // Handle selection
+                        child: FilterChip(
+                          label: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(category),
+                          ),
+                          selected: _selectedCategory == category,
+                          onSelected: (selected) {
                             if (selected) {
                               setState(() {
                                 _selectedCategory = category;
                               });
                             }
                           },
-                          backgroundColor: const Color(0xFF5D4037), // Medium brown
-                          selectedColor: const Color(0xFFA1887F), // Lighter brown for selected
-                          labelStyle: const TextStyle(color: Color(0xFFEFEBE9)), // Light beige text
-                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Ensure chip sizes to content
+                          backgroundColor: const Color(0xFF5D4037),
+                          selectedColor: const Color(0xFFA1887F),
+                          labelStyle: const TextStyle(color: Color(0xFFEFEBE9)),
+                          showCheckmark: false, // チェックマークを非表示にする
                         ),
                       ))
                   .toList(),
