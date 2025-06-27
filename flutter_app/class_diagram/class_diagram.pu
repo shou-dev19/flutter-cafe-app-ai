@@ -1,0 +1,41 @@
+@startuml
+class MyApp
+class OrderRepository
+class PlaceOrderUseCase
+class MenuItem
+class Cart
+class CartItem
+class CartItemCard
+class MenuCard
+class CartView
+class OrderDataSource
+class MockOrderDataSource
+class RemoteOrderDataSource
+class OrderRepositoryImpl
+class CartNotifier
+MyApp --> MenuItem
+MyApp --> MenuCard
+MyApp --> CartView
+MyApp --> CartNotifier
+OrderRepository --> Cart
+PlaceOrderUseCase --> OrderRepository
+PlaceOrderUseCase --> Cart
+Cart --> CartItem
+CartItemCard --> CartItem
+CartItemCard --> CartNotifier
+MenuCard --> MenuItem
+CartView --> CartNotifier
+CartView --> CartItemCard
+OrderDataSource --> Cart
+MockOrderDataSource --> OrderDataSource
+MockOrderDataSource --> Cart
+RemoteOrderDataSource --> OrderDataSource
+RemoteOrderDataSource --> Cart
+OrderRepositoryImpl --> OrderDataSource
+OrderRepositoryImpl --> OrderRepository
+OrderRepositoryImpl --> Cart
+CartNotifier --> Cart
+CartNotifier --> CartItem
+CartNotifier --> MenuItem
+CartNotifier --> PlaceOrderUseCase
+@enduml
