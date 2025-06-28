@@ -1,0 +1,49 @@
+name: Generate Class Diagram
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'flutter_app/lib/**'
+
+jobs:
+  generate_diagram:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Install PlantUML
+        run: sudo apt-get update && sudo apt-get install -y plantuml
+
+      - name: Install dart-to-plantuml
+        run: dart pub global activate dart_to_plantuml
+
+      - name: Create output directory
+        run: mkdir -p flutter_app/class_diagram
+
+      - name: Generate PlantUML file
+        id: generate_puml
+        run: |
+          if dart pub global run dart_to_plantuml:main --input flutter_app/lib --output flutter_app/class_diagram/class_diagram.pu --no-gitter --exclude "**.g.dart,**.freezed.dart" --splash --no-legend --no-color --no-api --no-dot --no-html --no-metrics --no-structure --no-todos --no-warnings --no-tests --no-sources --no-scripts --no-config --no-lib --no-packages --no-sdk --no-header --no-footer --no-skinparams --no-title --no-unrelated --no-orphans --no-empty --no-enums --no-extensions --no-mixins --no-functions --no-variables --no-fields --no-methods --no-constructors --no-members --no-types --no-dependencies --no-implements; then
+            echo "::set-output name=puml_generated::true"
+          else
+            echo "::set-output name=puml_generated::false"
+          fi
+        continue-on-error: true
+
+      - name: Generate PNG from PlantUML
+        if: steps.generate_puml.outputs.puml_generated == 'true'
+        run: plantuml -tpng flutter_app/class_diagram/class_diagram.pu -o flutter_app/class_diagram
+
+      - name: Commit files
+        if: steps.generate_puml.outputs.puml_generated == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "docs: auto-generate class diagram"
+          file_pattern: flutter_app/class_diagram/class_diagram.png
+          commit_options: --no-verify
