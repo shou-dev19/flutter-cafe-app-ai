@@ -35,7 +35,7 @@ jobs:
         working-directory: ./flutter_app
 
       - name: Build Flutter web
-        run: flutter build web --release
+        run: flutter build web --release --base-href /flutter-cafe-app-ai/
         working-directory: ./flutter_app
 
       - name: Deploy to S3
