@@ -32,6 +32,5 @@ The following AWS resources have been created for this project:
 
 -   **S3 Bucket Name**: `flutter-cafe-app-prod`
 -   **IAM Role Name**: `GitHubActions-FlutterCafeApp-DeployRole`
--   **IAM Role ARN**: `arn:aws:iam::802982662199:role/GitHubActions-FlutterCafeApp-DeployRole`
 -   **CloudFront Distribution ID**: `E3VE6M6CRQ2GGB`
 -   **AWS Region**: `ap-northeast-1`
