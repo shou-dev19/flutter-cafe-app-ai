@@ -48,3 +48,10 @@ graph TD
 2.  **CloudFrontディストリビューションの作成**: S3バケットをオリジンとして設定し、ACMのSSL証明書をアタッチしてHTTPSを強制します。
 3.  **Route 53の設定**（オプション）: カスタムドメインのエイリアスレコードを作成し、CloudFrontディストリビューションに向けます。
 4.  **CI/CDパイプラインの構築**: `.github/workflows/aws-deploy.yml` ワークフローを使用して、`main` ブランチへのプッシュごとにデプロイプロセスを自動化します。
+
+## AWSリソース定義
+
+1. S3バケット名: flutter-cafe-app-prod
+2. AWSリージョン: ap-northeast-1
+3. 作成するIAMロール名: GitHubActions-FlutterCafeApp-DeployRole
+4. GitHubリポジトリ: shou-dev19/flutter-cafe-app-ai

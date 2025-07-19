@@ -25,3 +25,13 @@ The production infrastructure is designed as a serverless stack for scalability,
 
 -   **Core Components**: Amazon S3 (for hosting), Amazon CloudFront (as a CDN), and Amazon Route 53 (for DNS).
 -   **Detailed Documentation**: A full breakdown of the architecture, including diagrams and data flows, is available in the `AWS_ARCHITECTURE.md` file in the project root.
+
+## 4. Created AWS Resources
+
+The following AWS resources have been created for this project:
+
+-   **S3 Bucket Name**: `flutter-cafe-app-prod`
+-   **IAM Role Name**: `GitHubActions-FlutterCafeApp-DeployRole`
+-   **IAM Role ARN**: `arn:aws:iam::802982662199:role/GitHubActions-FlutterCafeApp-DeployRole`
+-   **CloudFront Distribution ID**: `E3VE6M6CRQ2GGB`
+-   **AWS Region**: `ap-northeast-1`
