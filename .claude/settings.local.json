@@ -20,7 +20,8 @@
       "Bash(sudo apt-get install:*)",
       "Bash(node:*)",
       "Bash(npm:*)",
-      "Bash(PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable mmdc -i ci_cd_workflow.mmd -o ci_cd_workflow.png -p puppeteer.config.json)"
+      "Bash(PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable mmdc -i ci_cd_workflow.mmd -o ci_cd_workflow.png -p puppeteer.config.json)",
+      "Bash(flutter analyze:*)"
     ],
     "deny": []
   }
