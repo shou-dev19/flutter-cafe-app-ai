@@ -1,0 +1,21 @@
+flowchart TD
+    A[開発者がコードをpush] --> B[GitHub Actions トリガー]
+    B --> C{mainブランチ？}
+    C -->|Yes| D[依存関係インストール]
+    C -->|No| E[終了]
+    D --> F[Flutter Testの実行]
+    F --> G{テスト通過？}
+    G -->|No| H[ビルド失敗]
+    G -->|Yes| I[Cypress E2Eテスト実行]
+    I --> J{E2Eテスト通過？}
+    J -->|No| K[デプロイ失敗]
+    J -->|Yes| L[Flutter Web ビルド]
+    L --> M[OIDC認証でAWS接続]
+    M --> N[S3バケットに同期]
+    N --> O[CloudFrontキャッシュ無効化]
+    O --> P[デプロイ完了]
+    
+    style A fill:#e1f5fe
+    style P fill:#c8e6c9
+    style H fill:#ffcdd2
+    style K fill:#ffcdd2

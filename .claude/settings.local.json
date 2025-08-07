@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm:*)",
+      "Bash(npm install:*)",
+      "Bash(mmdc:*)",
+      "Bash(apt-get:*)",
+      "Bash(apt-get install:*)",
+      "WebFetch(domain:mermaid.ink)",
+      "Bash(python3:*)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "WebFetch(domain:app.diagrams.net)",
+      "WebFetch(domain:www.daigram.app)",
+      "WebFetch(domain:mermaid.live)",
+      "Bash(curl:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(sudo apt-get:*)",
+      "Bash(sudo apt-get install:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable mmdc -i ci_cd_workflow.mmd -o ci_cd_workflow.png -p puppeteer.config.json)"
+    ],
+    "deny": []
+  }
+}
