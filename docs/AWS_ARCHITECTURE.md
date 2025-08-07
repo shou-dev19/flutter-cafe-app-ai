@@ -25,21 +25,21 @@
 
 ```mermaid
 graph TD
-    A[ユーザー] --> B{Route 53 (DNS)};
-    B --> C{CloudFront (CDN)};
-    C --> D[S3バケット (静的ファイル)];
-    E[ACM (SSL証明書)] -.-> C;
+    A["ユーザー"] --> B["Route 53<br/>DNS"]
+    B --> C["CloudFront<br/>CDN"]
+    C --> D["S3バケット<br/>静的ファイル"]
+    E["ACM<br/>SSL証明書"] -.-> C
 ```
 
 ### 2. CI/CD デプロイフロー
 
 ```mermaid
 graph TD
-    A[開発者がmainにプッシュ] --> B{GitHub};
-    B -- トリガー --> C{GitHub Actions Runner};
-    C -- ジョブ実行 --> D[1. Flutterアプリのビルド];
-    D --> E[2. ビルド成果物をS3に同期];
-    E --> F[3. CloudFrontキャッシュの無効化];
+    A["開発者が<br/>mainにプッシュ"] --> B["GitHub"]
+    B -->|"トリガー"| C["GitHub Actions<br/>Runner"]
+    C -->|"ジョブ実行"| D["Flutterアプリの<br/>ビルド"]
+    D --> E["ビルド成果物を<br/>S3に同期"]
+    E --> F["CloudFront<br/>キャッシュの無効化"]
 ```
 
 ## 実装ステップ
