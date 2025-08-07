@@ -77,18 +77,17 @@ flowchart TD
     M --> N[S3バケットに同期]
     N --> O[CloudFrontキャッシュ無効化]
     O --> P[デプロイ完了]
-    
+
     style A fill:#e1f5fe
     style P fill:#c8e6c9
     style H fill:#ffcdd2
     style K fill:#ffcdd2
 ```
 
-![CI/CD Workflow](./docs/ci_cd_workflow.png)
-
 #### フロー詳細:
+
 1. **トリガー**: `main`ブランチへの`push`
-2. **テスト実行**: ユニットテスト・E2Eテストの実行
+2. **テスト実行**: ユニットテスト・E2E テストの実行
 3. **ビルド**: Flutter Web アプリケーションのビルド
 4. **デプロイ**: 静的ファイルの S3 バケット同期
 5. **キャッシュ無効化**: CloudFront キャッシュの無効化

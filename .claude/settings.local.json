@@ -21,7 +21,9 @@
       "Bash(node:*)",
       "Bash(npm:*)",
       "Bash(PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable mmdc -i ci_cd_workflow.mmd -o ci_cd_workflow.png -p puppeteer.config.json)",
-      "Bash(flutter analyze:*)"
+      "Bash(flutter analyze:*)",
+      "Bash(PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable mmdc -i aws_user_flow.mmd -o aws_user_flow.png -p ../puppeteer.config.json)",
+      "Bash(PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable mmdc -i aws_cicd_flow.mmd -o aws_cicd_flow.png -p ../puppeteer.config.json)"
     ],
     "deny": []
   }

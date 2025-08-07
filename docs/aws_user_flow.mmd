@@ -1,0 +1,5 @@
+graph TD
+    A["ユーザー"] --> B["Route 53<br/>DNS"]
+    B --> C["CloudFront<br/>CDN"]
+    C --> D["S3バケット<br/>静的ファイル"]
+    E["ACM<br/>SSL証明書"] -.-> C
